@@ -15,7 +15,7 @@ print("cd www.gstatic.com/android/keyboard/emojikitchen")
 
 row_paths = []
 for i, y in enumerate(keys):
-    row_path = f"{i:03d}.png"
+    row_path = f"row-{i:03d}.png"
     row_paths.append(row_path)
     print(f"echo {row_path} {y}")
 
