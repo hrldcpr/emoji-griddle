@@ -10,26 +10,28 @@ Download the images:
 
 (Note that we could exclude isLatest==false images, but that would only reduce downloads by <10%, and who knows, the old ones could be interesting.)
 
-Fix a few images that have the wrong colorspace:
+Find a few weird images that libvips doesn't like:
 
     fd -t f -x identify > identities.txt
     # find non-sRGB colorspaces:
+    # (there were none)
     grep -v sRGB identities.txt
-    # find colorspaces such as "sRGB 252c":
+    # find colormaps / indexed palettes such as "252c":
+    # (they identify with an extra column)
     awk 'NF!=9' identities.txt
-    # convert to vanilla sRGB:
-    ...
+    # back up the originals before fixing:
+    cp <bad>{,-original}.png
 
-Organize the grid of images:
+Fix the weird images in GIMP by opening, adding transparency (even just a single pixel if necessary), and re-exporting with default PNG settings.
 
-    ...
+(Can also fix with `convert bad.png -define png:color-type=2 tmp.png` and `convert tmp.png -remap good.png fixed.png` but it's annoying and confusing.)
 
-Make the giant image and the Deep Zoom Image:
+Make the giant image:
 
+    python grid.py > grid.sh
     apt install libvips-tools
-    vips arrayjoin ...
-    vips dsave ...
+    bash grid.sh
 
-Serve the deep zoom image:
+Make the deep zoom tiles:
 
-    ...
+    vips dzsave griddle/grid.png deepgrid --suffix .webp
