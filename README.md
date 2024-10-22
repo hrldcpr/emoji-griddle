@@ -26,6 +26,10 @@ Fix the weird images in GIMP by opening, adding transparency (even just a single
 
 (Can also fix with `convert bad.png -define png:color-type=2 tmp.png` and `convert tmp.png -remap good.png fixed.png` but it's annoying and confusing.)
 
+Make 1/4 scale versions of all the images, to keep final size somewhat reasonable:
+
+    fd -t f -x convert {} -resize 134x134 {.}-small.png
+
 Make the giant image:
 
     python grid.py > grid.sh
@@ -34,5 +38,4 @@ Make the giant image:
 
 Make the deep zoom tiles:
 
-    vips resize grid.png smallgrid.png 0.25  # optional, sort of...
     vips dzsave smallgrid.png deepgrid --suffix .webp

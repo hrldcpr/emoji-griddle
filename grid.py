@@ -27,10 +27,13 @@ for i, y in enumerate(keys):
             for d in data[y]["combinations"].get(x, [])
             if d["isLatest"]
         ] or ["griddle/transparent.png"]
-        print(path, end=" ")
+        print(path.replace(".png", "-small.png"), end=" ")
     # note we only need to specify hspacing and vspacing because we build each row separately;
     # if we did a giant single arrayjoin for the entire grid, it would figure them out correctly:
-    print(f'" griddle/{row_path} --hspacing 535 --vspacing 535 --halign centre --valign centre')
+    # (full scale is 535px, 1/4 scale is 134px)
+    print(
+        f'" griddle/{row_path} --hspacing 134 --vspacing 134 --halign centre --valign centre'
+    )
 
 print("cd griddle")
 print(f'vips arrayjoin "{" ".join(row_paths)}" grid.png --across 1')
