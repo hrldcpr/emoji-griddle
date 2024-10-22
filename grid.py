@@ -27,7 +27,7 @@ for i, y in enumerate(keys):
             for d in data[y]["combinations"].get(x, [])
             if d["isLatest"]
         ] or ["griddle/transparent.png"]
-        print(path.replace(".png", "-small.png"), end=" ")
+        print(path.replace(".png", "-sm.png"), end=" ")
     # note we only need to specify hspacing and vspacing because we build each row separately;
     # if we did a giant single arrayjoin for the entire grid, it would figure them out correctly:
     # (full scale is 535px, 1/4 scale is 134px)
