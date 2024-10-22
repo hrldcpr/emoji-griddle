@@ -20,10 +20,10 @@ for i, y in enumerate(keys):
     # so we use vips instead
     print('vips arrayjoin "', end="")
     for x in keys:
-        (url,) = [
-            d["gStaticUrl"] for d in data[y]["combinations"].get(x, []) if d["isLatest"]
+        (path,) = [
+            d["gStaticUrl"].replace("https://www.gstatic.com/android/keyboard/emojikitchen/", "")
+            for d in data[y]["combinations"].get(x, []) if d["isLatest"]
         ] or ["griddle/transparent.png"]
-        path = url.replace("https://www.gstatic.com/android/keyboard/emojikitchen/", "")
         print(path, end=" ")
     # note we only need to specify hspacing and vspacing because we build each row separately;
     # if we did a giant single arrayjoin for the entire grid, it would figure them out correctly:
