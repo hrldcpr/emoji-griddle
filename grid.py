@@ -21,8 +21,11 @@ for i, y in enumerate(keys):
     print('vips arrayjoin "', end="")
     for x in keys:
         (path,) = [
-            d["gStaticUrl"].replace("https://www.gstatic.com/android/keyboard/emojikitchen/", "")
-            for d in data[y]["combinations"].get(x, []) if d["isLatest"]
+            d["gStaticUrl"].replace(
+                "https://www.gstatic.com/android/keyboard/emojikitchen/", ""
+            )
+            for d in data[y]["combinations"].get(x, [])
+            if d["isLatest"]
         ] or ["griddle/transparent.png"]
         print(path, end=" ")
     # note we only need to specify hspacing and vspacing because we build each row separately;
@@ -30,4 +33,4 @@ for i, y in enumerate(keys):
     print(f'" griddle/{row_path} --hspacing 535 --vspacing 535 --halign centre --valign centre')
 
 print("cd griddle")
-print(f'vips arrayjoin "{' '.join(row_paths)}" grid.png --across 1')
+print(f'vips arrayjoin "{" ".join(row_paths)}" grid.png --across 1')
