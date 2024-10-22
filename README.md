@@ -1,3 +1,7 @@
+Get `vips`:
+
+    apt install libvips-tools
+
 Get the metadata:
 
     wget https://github.com/xsalazar/emoji-kitchen-backend/raw/refs/heads/main/app/metadata.json
@@ -35,7 +39,6 @@ Make 1/4 scale versions of all the images, to keep final size somewhat reasonabl
 Make the giant image:
 
     python grid.py > grid.sh
-    apt install libvips-tools
     bash grid.sh
 
 Make the deep zoom tiles:
