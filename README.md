@@ -40,4 +40,4 @@ Make the giant image:
 
 Make the deep zoom tiles:
 
-    vips dzsave smallgrid.png deepgrid --suffix .webp
+    vips dzsave grid.png deepgrid --suffix .webp
