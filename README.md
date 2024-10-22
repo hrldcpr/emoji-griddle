@@ -28,7 +28,9 @@ Fix the weird images in GIMP by opening, adding transparency (even just a single
 
 Make 1/4 scale versions of all the images, to keep final size somewhat reasonable:
 
-    fd -t f -x convert {} -resize 134x134 {.}-small.png
+    fd -g '*.png' -E '*-small.png' -x vips resize {} {.}-small.png 0.25
+
+(Note that `convert -resize` can change color palettes, hence using `vips resize`.)
 
 Make the giant image:
 
