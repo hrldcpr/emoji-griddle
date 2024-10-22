@@ -34,4 +34,5 @@ Make the giant image:
 
 Make the deep zoom tiles:
 
-    vips dzsave griddle/grid.png deepgrid --suffix .webp
+    vips resize grid.png smallgrid.png 0.25  # optional, sort of...
+    vips dzsave smallgrid.png deepgrid --suffix .webp
