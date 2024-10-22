@@ -6,6 +6,7 @@ with open("metadata.json") as f:
 data = metadata["data"]
 
 keys = sorted(data, key=lambda k: data[k]["gBoardOrder"])
+print(f"echo {len(keys)}x{len(keys)}")
 
 row_paths = []
 print("cd www.gstatic.com/android/keyboard/emojikitchen")
@@ -24,7 +25,9 @@ for i, y in enumerate(keys):
         ] or ["griddle/transparent.png"]
         path = url.replace("https://www.gstatic.com/android/keyboard/emojikitchen/", "")
         print(path, end=" ")
-    print(f'" griddle/{row_path}')
+    # note we only need to specify hspacing and vspacing because we build each row separately;
+    # if we did a giant single arrayjoin for the entire grid, it would figure them out correctly:
+    print(f'" griddle/{row_path} --hspacing 535 --vspacing 535 --halign centre --valign centre')
 
 print("cd griddle")
 print(f'vips arrayjoin "{' '.join(row_paths)}" grid.png --across 1')
