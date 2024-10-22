@@ -8,9 +8,12 @@ data = metadata["data"]
 keys = sorted(data, key=lambda k: data[k]["gBoardOrder"])
 print(f"echo {len(keys)}x{len(keys)}")
 
-row_paths = []
+tmp = "/tmp/griddle"
+print(f"mkdir -p {tmp}")
+print(f"cp transparent*.png {tmp}")
 print("cd www.gstatic.com/android/keyboard/emojikitchen")
-print("mkdir -p griddle")
+
+row_paths = []
 for i, y in enumerate(keys):
     row_path = f"{i:03d}.png"
     row_paths.append(row_path)
@@ -26,14 +29,14 @@ for i, y in enumerate(keys):
             )
             for d in data[y]["combinations"].get(x, [])
             if d["isLatest"]
-        ] or ["griddle/transparent.png"]
+        ] or [f"{tmp}/transparent.png"]
         print(path.replace(".png", "-sm.png"), end=" ")
     # note we only need to specify hspacing and vspacing because we build each row separately;
     # if we did a giant single arrayjoin for the entire grid, it would figure them out correctly:
     # (full scale is 535px, 1/4 scale is 134px)
     print(
-        f'" griddle/{row_path} --hspacing 134 --vspacing 134 --halign centre --valign centre'
+        f'" {tmp}/{row_path} --hspacing 134 --vspacing 134 --halign centre --valign centre'
     )
 
-print("cd griddle")
+print(f"cd {tmp}")
 print(f'vips arrayjoin "{" ".join(row_paths)}" grid.png --across 1')
