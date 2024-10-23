@@ -6,13 +6,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/5.0.0/openseadragon.min.js"></script>
   </head>
   <body>
+    <!-- TODO easter egg if you (double?)click on self-combo, takes you to lazy-loaded long vertical scroll page for that emoji -->
     <div id="openseadragon1" style="width: 100vw; height: 100vh"></div>
     <script type="text/javascript">
-      var viewer = OpenSeadragon({
+      const viewer = OpenSeadragon({
         id: "openseadragon1",
         tileSources: "deepgrid-sm.dzi",
         showNavigationControl: false,
         maxZoomLevel: 400,
+      });
+      viewer.addHandler("canvas-click", function (e) {
+        e.preventDefaultAction = true;
+        const { x, y } = viewer.viewport.viewerElementToImageCoordinates(
+          e.position,
+        );
+
+        console.log("Clicked at image coordinates:", x, y);
       });
     </script>
   </body>
