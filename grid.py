@@ -39,4 +39,4 @@ for i, y in enumerate(keys):
     )
 
 print(f"cd {tmp}")
-print(f'vips arrayjoin "{" ".join(row_paths)}" grid.png --across 1')
+print(f'vips arrayjoin "{" ".join(row_paths)}" grid-sm.png --across 1')
