@@ -11,7 +11,7 @@ EMPTY_PNG = f"{TMP_DIR}/transparent.png"
 parser = argparse.ArgumentParser()
 parser.add_argument("metadata_path", help="metadata.json input file")
 parser.add_argument("script_path", help="build.sh output file")
-parser.add_argument("urls_path", help="urls.json output file")
+parser.add_argument("urls_path", help="urls.js output file")
 args = parser.parse_args()
 
 print(f"reading metadata {args.metadata_path}...")
@@ -109,8 +109,9 @@ for y in range(n):
         row.append(path)
     half_grid.append(row)
 
-print(f"writing url json {args.urls_path}...")
+print(f"writing url js {args.urls_path}...")
 with open(args.urls_path, "w") as f:
+    f.write("window.EMOJI_GRIDDLE_URLS=")
     json.dump(
         {
             "prefix": URL_PREFIX,
@@ -122,3 +123,4 @@ with open(args.urls_path, "w") as f:
         f,
         separators=(",", ":"),
     )
+    f.write(";\n")
