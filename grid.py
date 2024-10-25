@@ -6,12 +6,10 @@ TMP_DIR = "/tmp/griddle"
 
 with open("metadata.json") as f:
     metadata = json.load(f)
-
 data = metadata["data"]
-
 keys = sorted(data, key=lambda k: data[k]["gBoardOrder"])
-print(f"echo {len(keys)}x{len(keys)}")
 
+print(f"echo {len(keys)}x{len(keys)}")
 print(f"mkdir -p {TMP_DIR}")
 print(f"cp transparent*.png {TMP_DIR}")
 print(f"cd {DIR_PREFIX}")
