@@ -77,22 +77,48 @@ with open(args.script_path, "w") as f:
     f.write(f"cd {TMP_DIR}\n")
     f.write(f'vips arrayjoin "{" ".join(row_paths)}" grid-sm.png --across 1\n')
 
-# for smallest file:
-# - only store lower-left half of symmetric grid
-# - remove .png suffices
-# - replace None with 0 because it's shorter than "" or null
+# encode dates as a single character, from my arbitrary list:
+# (sorting is unnecessary but hey why not)
+chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+dates = dict(zip(chars, sorted({p.split("/", 1)[0] for row in grid for p in row if p})))
+date_chars = {d: c for c, d in dates.items()}
+
 half_grid = []
 for y in range(n):
     row = []
-    for x in range(y + 1):
+    for x in range(y + 1):  # only store lower-left half of symmetric grid
         path = grid[y][x]
-        row.append(path.replace(URL_SUFFIX, "") if path else 0)
+
+        if path is None:
+            row.append(0)  # replace None with 0 because it's shorter than "" or null
+            continue
+
+        # replace date with its one-character code:
+        date, _ = path.split("/", 1)
+        path = path.replace(f"{date}/", date_chars[date])
+
+        # replace the current emoji codes with "X" and "Y":
+        # (json keys look like e.g. 2705 or 263a-fe0f but urls look like u2705 or u263a-ufe0f)
+        ux = "-".join(f"u{k}" for k in keys[x].split("-"))
+        uy = "-".join(f"u{k}" for k in keys[y].split("-"))
+        path = path.replace(ux, "X").replace(uy, "Y")
+
+        # remove .png suffix:
+        path = path.replace(URL_SUFFIX, "")
+
+        row.append(path)
     half_grid.append(row)
 
 print(f"writing url json {args.urls_path}...")
 with open(args.urls_path, "w") as f:
     json.dump(
-        {"prefix": URL_PREFIX, "suffix": URL_SUFFIX, "grid": half_grid},
+        {
+            "prefix": URL_PREFIX,
+            "dates": dates,
+            "keys": keys,
+            "suffix": URL_SUFFIX,
+            "grid": half_grid,
+        },
         f,
         separators=(",", ":"),
     )
