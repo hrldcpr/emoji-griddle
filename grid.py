@@ -12,11 +12,6 @@ data = metadata["data"]
 keys = sorted(data, key=lambda k: data[k]["gBoardOrder"])
 n = len(keys)
 
-print(f"echo {n}x{n}")
-print(f"mkdir -p {TMP_DIR}")
-print(f"cp transparent*.png {TMP_DIR}")
-print(f"cd {DIR_PREFIX}")
-
 grid = []
 for ky in keys:
     row = []
@@ -45,6 +40,11 @@ for y in range(n):
         )
         grid[x][y] = grid[y][x] = grid[x][y] or grid[y][x]
 print(f"PASS symmetric {len(grid)}x{len(grid[0])}", file=sys.stderr)
+
+print(f"echo {n}x{n}")
+print(f"mkdir -p {TMP_DIR}")
+print(f"cp transparent*.png {TMP_DIR}")
+print(f"cd {DIR_PREFIX}")
 
 row_paths = []
 for y in range(n):
