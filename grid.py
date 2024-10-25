@@ -4,12 +4,14 @@ import sys
 
 DIR_PREFIX = "www.gstatic.com/android/keyboard/emojikitchen"
 URL_PREFIX = f"https://{DIR_PREFIX}/"
+URL_SUFFIX = ".png"
 TMP_DIR = "/tmp/griddle"
 EMPTY_PNG = f"{TMP_DIR}/transparent.png"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("metadata_path", help="metadata.json input file")
 parser.add_argument("script_path", help="build.sh output file")
+parser.add_argument("urls_path", help="urls.json output file")
 args = parser.parse_args()
 
 print(f"reading metadata {args.metadata_path}...")
@@ -74,3 +76,23 @@ with open(args.script_path, "w") as f:
 
     f.write(f"cd {TMP_DIR}\n")
     f.write(f'vips arrayjoin "{" ".join(row_paths)}" grid-sm.png --across 1\n')
+
+# for smallest file:
+# - only store lower-left half of symmetric grid
+# - remove .png suffices
+# - replace None with 0 because it's shorter than "" or null
+half_grid = []
+for y in range(n):
+    row = []
+    for x in range(y + 1):
+        path = grid[y][x]
+        row.append(path.replace(URL_SUFFIX, "") if path else 0)
+    half_grid.append(row)
+
+print(f"writing url json {args.urls_path}...")
+with open(args.urls_path, "w") as f:
+    json.dump(
+        {"prefix": URL_PREFIX, "suffix": URL_SUFFIX, "grid": half_grid},
+        f,
+        separators=(",", ":"),
+    )
