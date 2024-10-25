@@ -31,6 +31,7 @@ Fix the weird images in GIMP by opening, adding transparency (even just a single
 (Can also fix with `convert bad.png -define png:color-type=2 tmp.png` and `convert tmp.png -remap good.png fixed.png` but it's annoying and confusing.)
 
 Make 1/4 scale versions of all the images, to keep final size somewhat reasonable:
+**TODO** try 1/2 scale instead? 1/4 is a bit pixelated
 
     fd -g '*.png' -E '*-sm*.png' -x vips resize {} {.}-sm.png 0.25
 
