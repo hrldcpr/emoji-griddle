@@ -39,7 +39,7 @@ Make 1/4 scale versions of all the images, to keep final size somewhat reasonabl
 
 Make the giant image:
 
-    python grid.py > grid.sh
+    python grid.py metadata.json grid.sh
     bash grid.sh
 
 Make the deep zoom tiles:

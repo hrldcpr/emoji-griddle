@@ -1,3 +1,4 @@
+import argparse
 import json
 import sys
 
@@ -6,7 +7,13 @@ URL_PREFIX = f"https://{DIR_PREFIX}/"
 TMP_DIR = "/tmp/griddle"
 EMPTY_PNG = f"{TMP_DIR}/transparent.png"
 
-with open("metadata.json") as f:
+parser = argparse.ArgumentParser()
+parser.add_argument("metadata_path", help="metadata.json input file")
+parser.add_argument("script_path", help="build.sh output file")
+args = parser.parse_args()
+
+print(f"reading metadata {args.metadata_path}...")
+with open(args.metadata_path) as f:
     metadata = json.load(f)
 data = metadata["data"]
 keys = sorted(data, key=lambda k: data[k]["gBoardOrder"])
@@ -31,40 +38,39 @@ for y in range(n):
             continue
         if (grid[x][y] is not None) and (grid[y][x] is not None):
             # two different values, need to address manually:
-            print(f"FAIL {x}*{y}={grid[x][y]} != {y}*{x}={grid[y][x]}", file=sys.stderr)
+            print(f"FAIL {x}*{y}={grid[x][y]} != {y}*{x}={grid[y][x]}")
             sys.exit(1)
         # only one value, can fix automatically:
-        print(
-            f"WARN fixing {x}*{y}={grid[x][y]} != {y}*{x}={grid[y][x]}",
-            file=sys.stderr,
-        )
+        print(f"WARN fixing {x}*{y}={grid[x][y]} != {y}*{x}={grid[y][x]}")
         grid[x][y] = grid[y][x] = grid[x][y] or grid[y][x]
-print(f"PASS symmetric {len(grid)}x{len(grid[0])}", file=sys.stderr)
+print(f"PASS symmetric {len(grid)}x{len(grid[0])}")
 
-print(f"echo {n}x{n}")
-print(f"mkdir -p {TMP_DIR}")
-print(f"cp transparent*.png {TMP_DIR}")
-print(f"cd {DIR_PREFIX}")
+print(f"writing build script {args.script_path}...")
+with open(args.script_path, "w") as f:
+    f.write(f"echo {n}x{n}\n")
+    f.write(f"mkdir -p {TMP_DIR}\n")
+    f.write(f"cp transparent*.png {TMP_DIR}\n")
+    f.write(f"cd {DIR_PREFIX}\n")
 
-row_paths = []
-for y in range(n):
-    row_path = f"row-{y:03d}.png"
-    row_paths.append(row_path)
-    print(f"echo {row_path} {keys[y]}")
+    row_paths = []
+    for y in range(n):
+        row_path = f"row-{y:03d}.png"
+        row_paths.append(row_path)
+        f.write(f"echo {row_path} {keys[y]}\n")
 
-    # note that imagemagick `convert ... +append out.png` seems to have a default width/height limit of 16000px
-    # so we use vips instead
-    print('vips arrayjoin "', end="")
-    for x in range(n):
-        path = grid[y][x] or EMPTY_PNG
-        path = path.replace(".png", "-sm.png")  # use small images, for now
-        print(path, end=" ")
-    # note we only need to specify hspacing and vspacing because we build each row separately;
-    # if we did a giant single arrayjoin for the entire grid, it would figure them out correctly:
-    # (full scale is 535px, 1/4 scale is 134px)
-    print(
-        f'" {TMP_DIR}/{row_path} --hspacing 134 --vspacing 134 --halign centre --valign centre'
-    )
+        # note that imagemagick `convert ... +append out.png` seems to have a default width/height limit of 16000px
+        # so we use vips instead
+        f.write('vips arrayjoin "')
+        for x in range(n):
+            path = grid[y][x] or EMPTY_PNG
+            path = path.replace(".png", "-sm.png")  # use small images, for now
+            f.write(f"{path} ")
+        # note we only need to specify hspacing and vspacing because we build each row separately;
+        # if we did a giant single arrayjoin for the entire grid, it would figure them out correctly:
+        # (full scale is 535px, 1/4 scale is 134px)
+        f.write(
+            f'" {TMP_DIR}/{row_path} --hspacing 134 --vspacing 134 --halign centre --valign centre\n'
+        )
 
-print(f"cd {TMP_DIR}")
-print(f'vips arrayjoin "{" ".join(row_paths)}" grid-sm.png --across 1')
+    f.write(f"cd {TMP_DIR}\n")
+    f.write(f'vips arrayjoin "{" ".join(row_paths)}" grid-sm.png --across 1\n')
