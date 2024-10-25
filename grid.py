@@ -29,6 +29,8 @@ for i, y in enumerate(keys):
             for d in data[y]["combinations"].get(x, [])
             if d["isLatest"]
         ] or [f"{TMP_DIR}/transparent.png"]
+        # use small images, for now:
+        # TODO try 2x larger? they're a bit pixelated
         print(path.replace(".png", "-sm.png"), end=" ")
     # note we only need to specify hspacing and vspacing because we build each row separately;
     # if we did a giant single arrayjoin for the entire grid, it would figure them out correctly:
