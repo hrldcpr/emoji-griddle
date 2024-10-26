@@ -1,4 +1,7 @@
 (() => {
+  const INITIAL_ZOOM = 0.25;
+  const MIN_CLICK_ZOOM = 0.2;
+
   const urlKey = (k) =>
     // rehydrate the keys, which are stored without 'u':
     k
@@ -75,14 +78,14 @@
         },
         true,
       )
-      .zoomTo(25, null, true);
+      .zoomTo(viewer.viewport.imageToViewportZoom(INITIAL_ZOOM), null, true);
   });
 
   viewer.addHandler("canvas-click", (e) => {
     if (!e.quick) return; // not really a click
 
     const z = viewer.viewport.viewportToImageZoom(viewer.viewport.getZoom());
-    if (z < 0.2) return; // ignore clicks when too zoomed out
+    if (z < MIN_CLICK_ZOOM) return; // ignore clicks when too zoomed out
 
     e.preventDefaultAction = true; // prevent zoom on desktop
 
