@@ -43,6 +43,7 @@
     const data = {
       files: [new File([blob], "emoji-griddle.png", { type: "image/png" })],
     };
+    // TODO how to get image preview when sharing in iOS/Safari?
 
     if (!navigator.canShare(data)) {
       // can't share, open in new tab instead
