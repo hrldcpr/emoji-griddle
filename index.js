@@ -64,6 +64,20 @@
   });
   // TODO start at a random part of the grid, somewhat zoomed in
 
+  viewer.addHandler("open", () => {
+    // start zoomed in at a random spot
+    // (waiting for 'open' event ensures that viewport is ready)
+    viewer.viewport
+      .panTo(
+        {
+          x: 0.1 + 0.8 * Math.random(),
+          y: 0.1 + 0.8 * Math.random(),
+        },
+        true,
+      )
+      .zoomTo(25, null, true);
+  });
+
   viewer.addHandler("canvas-click", (e) => {
     if (!e.quick) return; // not really a click
 
