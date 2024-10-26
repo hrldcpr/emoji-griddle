@@ -37,11 +37,11 @@ Make 1/4 scale versions of all the images, to keep final size somewhat reasonabl
 
 (Note that `convert -resize` can change color palettes, hence using `vips resize`.)
 
-Make the giant image:
+Generate URL data for the website and a script to build the giant image:
 
-    python grid.py metadata.json grid.sh urls.js
-    bash grid.sh
+    python grid.py metadata.json urls.js build.sh
 
-Make the deep zoom tiles:
+Make the giant image and then the deep zoom tiles:
 
+    bash build.sh
     vips dzsave /tmp/griddle/grid-sm.png deepgrid-sm --suffix .webp

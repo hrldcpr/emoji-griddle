@@ -11,8 +11,8 @@ PIXELS = 134  # (full scale is 535px, 1/4 scale is 134px)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("metadata_path", help="metadata.json input file")
-parser.add_argument("script_path", help="build.sh output file")
 parser.add_argument("urls_path", help="urls.js output file")
+parser.add_argument("script_path", help="build.sh output file")
 args = parser.parse_args()
 
 print(f"reading metadata {args.metadata_path}...")
