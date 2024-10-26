@@ -63,7 +63,6 @@
     maxZoomLevel: 400,
     // TODO gestureSettingsTouch and gestureSettingsMouse
   });
-  // TODO start at a random part of the grid, somewhat zoomed in
 
   viewer.addHandler("open", () => {
     // start zoomed in at a random spot
