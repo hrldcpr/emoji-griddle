@@ -7,6 +7,7 @@ URL_PREFIX = f"https://{DIR_PREFIX}/"
 URL_SUFFIX = ".png"
 TMP_DIR = "/tmp/griddle"
 EMPTY_PNG = f"{TMP_DIR}/transparent.png"
+PIXELS = 134  # (full scale is 535px, 1/4 scale is 134px)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("metadata_path", help="metadata.json input file")
@@ -69,9 +70,8 @@ with open(args.script_path, "w") as f:
             f.write(f"{path} ")
         # note we only need to specify hspacing and vspacing because we build each row separately;
         # if we did a giant single arrayjoin for the entire grid, it would figure them out correctly:
-        # (full scale is 535px, 1/4 scale is 134px)
         f.write(
-            f'" {TMP_DIR}/{row_path} --hspacing 134 --vspacing 134 --halign centre --valign centre\n'
+            f'" {TMP_DIR}/{row_path} --hspacing {PIXELS} --vspacing {PIXELS} --halign centre --valign centre\n'
         )
 
     f.write(f"cd {TMP_DIR}\n")
@@ -114,6 +114,7 @@ with open(args.urls_path, "w") as f:
     f.write("window.EMOJI_GRIDDLE_URLS=")
     json.dump(
         {
+            "pixels": PIXELS,
             "prefix": URL_PREFIX,
             "dates": dates,
             "keys": keys,
