@@ -31,6 +31,29 @@
     return `${prefix}${url}${suffix}`;
   };
 
+  const shareImage = async (url) => {
+    if (!(navigator.canShare && navigator.share)) {
+      // can't share, open in new tab instead
+      window.open(url);
+      return;
+    }
+
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const data = {
+      files: [new File([blob], "emoji-griddle.png", { type: "image/png" })],
+    };
+
+    if (!navigator.canShare(data)) {
+      // can't share, open in new tab instead
+      console.log("!navigator.canShare", data);
+      window.open(url);
+      return;
+    }
+
+    navigator.share(data);
+  };
+
   const viewer = OpenSeadragon({
     id: "openseadragon1",
     tileSources: "deepgrid-sm.dzi",
@@ -43,6 +66,6 @@
     e.preventDefaultAction = true; // prevent zoom on desktop
     const p = viewer.viewport.viewerElementToImageCoordinates(e.position);
     const url = getUrl(p.x, p.y);
-    if (url) window.open(url);
+    if (url) shareImage(url);
   });
 })();
