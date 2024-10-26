@@ -57,7 +57,7 @@
 
   const viewer = OpenSeadragon({
     id: "griddle",
-    tileSources: "../emoji-griddle-data/deepgrid-sm.dzi",
+    tileSources: "https://hrldcpr.github.io/emoji-griddle-data/deepgrid-sm.dzi",
     showNavigationControl: false,
     maxZoomLevel: 400,
   });
