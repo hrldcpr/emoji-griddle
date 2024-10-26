@@ -32,7 +32,8 @@
   };
 
   const shareImage = async (url) => {
-    if (!(navigator.canShare && navigator.share)) {
+    const alwaysOpen = true; // never use share dialog, for now
+    if (alwaysOpen || !(navigator.canShare && navigator.share)) {
       // can't share, open in new tab instead
       window.open(url);
       return;
