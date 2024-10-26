@@ -17,7 +17,7 @@
     let [x, y] = [Math.floor(px / pixels), Math.floor(py / pixels)];
     // only the lower-left half of grid is stored, since it's symmetrical:
     if (y < x) [y, x] = [x, y];
-    if (x < 0 || y >= urls.keys.length) {
+    if (x < 0 || y >= keys.length) {
       console.log("out of bounds", { x, y });
       return;
     }
