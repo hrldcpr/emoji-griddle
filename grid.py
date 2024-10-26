@@ -109,6 +109,8 @@ for y in range(n):
         row.append(path)
     half_grid.append(row)
 
+# TODO XXX all left-facing moon urls are broken??
+
 print(f"writing url js {args.urls_path}...")
 with open(args.urls_path, "w") as f:
     f.write("window.EMOJI_GRIDDLE_URLS=")

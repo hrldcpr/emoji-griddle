@@ -61,6 +61,7 @@
     showNavigationControl: false,
     maxZoomLevel: 400,
   });
+  // TODO start at a random part of the grid, somewhat zoomed in
 
   viewer.addHandler("canvas-click", (e) => {
     if (!e.quick) return; // not really a click
