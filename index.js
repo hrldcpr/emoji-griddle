@@ -56,7 +56,7 @@
 
   const viewer = OpenSeadragon({
     id: "openseadragon1",
-    tileSources: "deepgrid-sm.dzi",
+    tileSources: "../emoji-griddle-data/deepgrid-sm.dzi",
     showNavigationControl: false,
     maxZoomLevel: 400,
   });
