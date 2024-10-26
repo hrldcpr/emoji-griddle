@@ -1,12 +1,12 @@
 (() => {
-  const url_key = (k) =>
+  const urlKey = (k) =>
     // rehydrate the keys, which are stored without 'u':
     k
       .split("-")
       .map((s) => `u${s}`)
       .join("-");
 
-  const get_url = (px, py) => {
+  const getUrl = (px, py) => {
     const urls = window.EMOJI_GRIDDLE_URLS;
     if (!urls) {
       console.log("urls not loaded");
@@ -26,9 +26,7 @@
     // first character encodes the date:
     url = `${dates[url[0]]}/${url.substring(1)}`;
     // X and Y encode the two emoji keys:
-    url = url
-      .replaceAll("X", url_key(keys[x]))
-      .replaceAll("Y", url_key(keys[y]));
+    url = url.replaceAll("X", urlKey(keys[x])).replaceAll("Y", urlKey(keys[y]));
     // add prefix and suffix
     return `${prefix}${url}${suffix}`;
   };
@@ -44,7 +42,7 @@
     if (!e.quick) return; // not really a click
     e.preventDefaultAction = true; // prevent zoom on desktop
     const p = viewer.viewport.viewerElementToImageCoordinates(e.position);
-    const url = get_url(p.x, p.y);
+    const url = getUrl(p.x, p.y);
     if (url) window.open(url);
   });
 })();
