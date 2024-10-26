@@ -41,6 +41,7 @@
   });
 
   viewer.addHandler("canvas-click", (e) => {
+    if (!e.quick) return; // not really a click
     e.preventDefaultAction = true;
     const p = viewer.viewport.viewerElementToImageCoordinates(e.position);
     const url = get_url(p.x, p.y);
