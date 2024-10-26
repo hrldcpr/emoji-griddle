@@ -42,7 +42,7 @@
 
   viewer.addHandler("canvas-click", (e) => {
     if (!e.quick) return; // not really a click
-    e.preventDefaultAction = true;
+    e.preventDefaultAction = true; // prevent zoom on desktop
     const p = viewer.viewport.viewerElementToImageCoordinates(e.position);
     const url = get_url(p.x, p.y);
     if (url) window.open(url);
