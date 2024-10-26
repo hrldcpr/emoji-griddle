@@ -81,8 +81,7 @@
   viewer.addHandler("canvas-click", (e) => {
     if (!e.quick) return; // not really a click
 
-    const z = viewer.viewport.viewportToImageZoom(viewer.viewport.getZoom());
-    if (z < 0.2) return; // ignore clicks when too zoomed out
+    if (viewer.viewport.getZoom() < 30) return; // ignore clicks when too zoomed out
 
     e.preventDefaultAction = true; // prevent zoom on desktop
 
