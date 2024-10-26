@@ -55,7 +55,7 @@
   };
 
   const viewer = OpenSeadragon({
-    id: "openseadragon1",
+    id: "griddle",
     tileSources: "../emoji-griddle-data/deepgrid-sm.dzi",
     showNavigationControl: false,
     maxZoomLevel: 400,
@@ -68,4 +68,6 @@
     const url = getUrl(p.x, p.y);
     if (url) shareImage(url);
   });
+
+  // TODO easter egg if you (double?)click on self-combo, takes you to lazy-loaded long vertical scroll page for that emoji
 })();
