@@ -62,6 +62,7 @@
   const viewer = OpenSeadragon({
     id: "griddle",
     // TODO put data prefix in a constant, and also use for urls.js
+    // TODO switch between repo-a and repo-b, for more seamless updates
     tileSources: "https://hrldcpr.github.io/emoji-griddle-data/deepgrid-sm.dzi",
     showNavigationControl: false,
     maxZoomLevel: 400,
