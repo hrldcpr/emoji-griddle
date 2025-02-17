@@ -9,10 +9,8 @@ Get the metadata:
 
 Download the images:
 
-    jq -r '.. | .gStaticUrl? // empty' metadata.json | sort | uniq > urls.txt
+    jq -r '.. | select(.isLatest?) | .gStaticUrl' metadata.json | sort | uniq > urls.txt
     python3 download.py
-
-(Note that we could exclude isLatest==false images, but that would only reduce downloads by <10%, and who knows, the old ones could be interesting.)
 
 Find a few weird images that libvips doesn't like:
 
