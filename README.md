@@ -44,4 +44,18 @@ Generate URL data for the website and a script to build the giant image:
 Make the giant image and then the deep zoom tiles:
 
     bash build.sh
+    cd ..
+    mkdir emoji-griddle-data-<N>
+    cd emoji-griddle-data-<N>
+    mv ../emoji-griddle/urls.js .
     vips dzsave /tmp/griddle/grid-sm.png deepgrid-sm --suffix .webp
+    git init
+    git add .
+    git commit -m 'data'
+
+And finally, we deploy:
+
+- make a new github repo (since we don't want to maintain history since the files are huge)
+- push
+- enable github pages
+- update the references to `emoji-griddle-data-X/` in index.html and index.js
