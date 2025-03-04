@@ -14,7 +14,8 @@ Download the images:
 
 Find a few weird images that libvips doesn't like:
 
-    fd -t f -x identify > identities.txt
+    cd www.gstatic.com
+    fd -t f -E '-sm.png' -x identify > identities.txt
     # find non-sRGB colorspaces:
     # (there were none)
     grep -v sRGB identities.txt
@@ -31,12 +32,13 @@ Fix the weird images in GIMP by opening, adding transparency (even just a single
 Make 1/4 scale versions of all the images, to keep final size somewhat reasonable:
 **TODO** try 1/2 scale instead? 1/4 is a bit pixelated
 
-    fd -g '*.png' -E '*-sm*.png' -x vips resize {} {.}-sm.png 0.25
+    fd -g '*.png' -E '*-sm.png' -x bash ../shrink.sh {}
 
 (Note that `convert -resize` can change color palettes, hence using `vips resize`.)
 
 Generate URL data for the website and a script to build the giant image:
 
+    cd ..
     python grid.py metadata.json urls.js build.sh
 
 Make the giant image and then the deep zoom tiles:
