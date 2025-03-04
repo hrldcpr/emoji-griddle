@@ -32,7 +32,7 @@ Fix the weird images in GIMP by opening, adding transparency (even just a single
 Make 1/4 scale versions of all the images, to keep final size somewhat reasonable:
 **TODO** try 1/2 scale instead? 1/4 is a bit pixelated
 
-    fd -g '*.png' -E '*-sm.png' -x bash ../shrink.sh {}
+    fd -g '*.png' -E '*-sm.png' -x bash ../shrink.bash {}
 
 (Note that `convert -resize` can change color palettes, hence using `vips resize`.)
 
