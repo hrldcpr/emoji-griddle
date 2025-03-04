@@ -56,7 +56,7 @@ Make the giant image and then the deep zoom tiles:
 And finally, we deploy:
 
 - make a new github repo (since we don't want to maintain history since the files are huge)
-- push
-- enable github pages
+- `git push` (takes a while)
+- enable github pages (takes a while)
 - update the references to `emoji-griddle-data-<N>/` in index.html and index.js
 - once things have settled (maybe wait at least a day, for caches to busy), can delete previous data repo
