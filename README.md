@@ -59,4 +59,5 @@ And finally, we deploy:
 - `git push` (takes a while)
 - enable github pages (takes a while)
 - update the references to `emoji-griddle-data-<N>/` in index.html and index.js
+- commit with a reference to the `emoji-kitchen-backend` commit that the metadata came from
 - once things have settled (maybe wait at least a day, for caches to busy), can delete previous data repo
