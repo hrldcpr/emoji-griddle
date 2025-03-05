@@ -15,7 +15,7 @@ Download the images:
 Find a few weird images that libvips doesn't like:
 
     cd www.gstatic.com
-    fd -t f -E '-sm.png' -x identify > identities.txt
+    fd -t f -E '*-sm.png' -x identify > identities.txt
     # find non-sRGB colorspaces:
     # (there were none)
     grep -v sRGB identities.txt
