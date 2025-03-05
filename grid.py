@@ -10,7 +10,6 @@ EMPTY_PNG = f"{TMP_DIR}/transparent.png"
 PIXELS = 134  # (full scale is 534px, 1/4 scale is 134px)
 WEIRD_KEYS = {
     "1fa84",  # the first key by gBoardOrder; all of its combos are simplistic and in a different style
-    "1f31b",  # left-facing moon combos seem to have been removed, the originals 404 now
 }
 
 parser = argparse.ArgumentParser()
