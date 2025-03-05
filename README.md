@@ -65,4 +65,5 @@ And finally, we deploy:
 - update the references to `emoji-griddle-data-<N>/` in index.html and index.js
 - `git commit -m 'data based on xsalazar/emoji-kitchen-backend@<commit-hash>'`
 - `git push`
+- ssh into server and pull and purge cache
 - once things have settled (maybe wait at least a day, for caches to busy), can delete previous data repo
