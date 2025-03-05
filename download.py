@@ -13,6 +13,7 @@ for i, line in enumerate(open("urls.txt")):
         print("#", i)
         continue
 
+    # TODO retry a couple times
     subprocess.run(
         ["wget", "--quiet", "--force-directories", line.strip()]
     ).check_returncode()
