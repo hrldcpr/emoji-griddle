@@ -2,10 +2,10 @@ Get `vips`:
 
     apt install libvips-tools
 
-Get the metadata:
+Get the metadata from https://github.com/xsalazar/emoji-kitchen-backend :
 
-    wget https://github.com/xsalazar/emoji-kitchen-backend/raw/refs/heads/main/app/metadata.json
-    jq . metadata.json > metadata-pretty.json
+    cp ../emoji-kitchen-backend/app/metadata.json .
+    jq . metadata.json > metadata-pretty.json  # for taking a look
 
 Download the images:
 
@@ -37,7 +37,7 @@ Make 1/4 scale versions of all the images, to keep final size somewhat reasonabl
 
     fd -g '*.png' -E '*-sm.png' -x bash ../shrink.bash {}
 
-(Note that `convert -resize` can change color palettes, hence using `vips resize`.)
+(Note that `convert -resize` can change color palettes, hence using `vips thumbnail`.)
 
 Generate URL data for the website and a script to build the giant image:
 
