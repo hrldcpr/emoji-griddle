@@ -63,7 +63,7 @@
     id: "griddle",
     // TODO put data prefix in a constant, and also use for urls.js
     tileSources:
-      "https://hrldcpr.github.io/emoji-griddle-data-3/deepgrid-sm.dzi",
+      "https://hrldcpr.github.io/emoji-griddle-data-4/deepgrid-sm.dzi",
     showNavigationControl: false,
     maxZoomLevel: 400,
     // TODO gestureSettingsTouch and gestureSettingsMouse
