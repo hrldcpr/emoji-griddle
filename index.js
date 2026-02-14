@@ -61,6 +61,7 @@
 
   const viewer = OpenSeadragon({
     id: "griddle",
+    drawer: "canvas", // webgl draw-er fails on some Android phones
     // TODO put data prefix in a constant, and also use for urls.js
     tileSources:
       "https://hrldcpr.github.io/emoji-griddle-data-4/deepgrid-sm.dzi",
