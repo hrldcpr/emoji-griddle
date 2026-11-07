@@ -14,8 +14,13 @@ for i, line in enumerate(open("urls.txt")):
         continue
 
     # TODO retry a couple times
-    subprocess.run(
+    code = subprocess.run(
         ["wget", "--quiet", "--force-directories", line.strip()]
-    ).check_returncode()
-    print(i)
+    ).returncode
+    if code == 0:
+        print(i)
+    elif code == 8:
+        print("NOT FOUND", line.strip())
+    else:
+        raise f"wget exit code={code} for {line.strip()}"
     time.sleep(0.5)
