@@ -6,7 +6,7 @@ import sys
 DIR_PREFIX = "www.gstatic.com/android/keyboard/emojikitchen"
 URL_PREFIX = f"https://{DIR_PREFIX}/"
 URL_SUFFIX = ".png"
-TMP_DIR = "/tmp/griddle"
+TMP_DIR = "build"
 EMPTY_PNG = f"{TMP_DIR}/transparent.png"
 PIXELS = 134  # (full scale is 534px, 1/4 scale is 134px)
 WEIRD_KEYS = {

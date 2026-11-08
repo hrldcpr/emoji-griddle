@@ -51,7 +51,7 @@ Make the giant image and then the deep zoom tiles:
     mkdir emoji-griddle-data-<N>
     cd emoji-griddle-data-<N>
     mv ../emoji-griddle/urls.js .
-    vips dzsave /tmp/griddle/grid-sm.png deepgrid-sm --suffix .webp
+    vips dzsave ../emoji-griddle/build/grid-sm.png deepgrid-sm --suffix .webp
     git init
     git add .
     git commit -m 'data based on xsalazar/emoji-kitchen-backend@<commit-hash>'
