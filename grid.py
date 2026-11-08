@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 import sys
 
 DIR_PREFIX = "www.gstatic.com/android/keyboard/emojikitchen"
@@ -50,6 +51,15 @@ for y in range(n):
         print(f"WARN fixing {x}*{y}={grid[x][y]} != {y}*{x}={grid[y][x]}")
         grid[x][y] = grid[y][x] = grid[x][y] or grid[y][x]
 print(f"PASS symmetric {len(grid)}x{len(grid[0])}")
+
+# remove missing images, which should be rare:
+for y in range(n):
+    for x in range(y + 1):
+        path = grid[x][y]
+        if path and not os.path.isfile(f"{DIR_PREFIX}/{path}"):
+            print(f"WARN skipping missing file {x}*{y}={path}")
+            grid[x][y] = None
+            grid[y][x] = None
 
 print(f"writing build script {args.script_path}...")
 with open(args.script_path, "w") as f:
