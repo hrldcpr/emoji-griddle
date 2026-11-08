@@ -13,9 +13,10 @@ Download the images:
     python3 download.py
 
 Find a few weird images that libvips doesn't like:
+(most recently there were none, so may have only been an issue with the early stuff)
 
-    cd www.gstatic.com
-    fd -t f -E '*-sm.png' -x identify > identities.txt
+    find www.gstatic.com/android/ -type f -ctime -1 -exec identify {} \; > identities.txt
+    # (would use fd which has better parallelism defaults, but it doesn't support ctime, only mtime)
     # find images with weird sizes:
     # (we don't actually need to do anything about these, but it's worth keeping an eye on them)
     grep -v '53[45]x53[45]' identities.txt
@@ -35,13 +36,12 @@ Fix the weird images in GIMP by opening, adding transparency (even just a single
 Make 1/4 scale versions of all the images, to keep final size somewhat reasonable:
 **TODO** try 1/2 scale instead? 1/4 is a bit pixelated
 
-    fd -g '*.png' -E '*-sm.png' -x bash ../shrink.bash {}
+    fd --search-path www.gstatic.com -g '*.png' -E '*-sm.png' -x bash shrink.bash {}
 
 (Note that `convert -resize` can change color palettes, hence using `vips thumbnail`.)
 
 Generate URL data for the website and a script to build the giant image:
 
-    cd ..
     python grid.py metadata.json urls.js build.sh
 
 Make the giant image and then the deep zoom tiles:
